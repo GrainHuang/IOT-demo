@@ -1,33 +1,27 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>扫码付款</title>
 </head>
-<body style="text-align:center;margin-top:40px">
+<body style="text-align:center;margin-top:40px;">
 
-<h2>请用手机扫码付款</h2>
+<h2>请使用微信扫码</h2>
 
-<div id="qrcode"></div>
+<img src="qrcode.png" width="250">
 
-<p>扫码后在手机完成支付</p>
-
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<p>扫码后完成付款</p>
 
 <script>
-const params = new URLSearchParams(location.search);
+const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
 
-// 手机端页面地址
-const mobileURL = `mobile.html?product=${product}`;
-
-new QRCode(document.getElementById("qrcode"), {
-  text: mobileURL,
-  width: 220,
-  height: 220
-});
+// 模拟：扫码后跳转手机页面
+setTimeout(() => {
+  window.location.href =
+    `mobile.html?product=${product}`;
+}, 3000);
 </script>
 
 </body>
 </html>
-

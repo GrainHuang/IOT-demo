@@ -3,44 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>虚拟付款</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 60px;
+    }
+    button {
+      font-size: 20px;
+      padding: 15px 40px;
+    }
+  </style>
 </head>
-<body style="text-align:center;margin-top:40px">
+<body>
 
-<h2 id="title"></h2>
+<h2 id="title">正在加载商品…</h2>
 
-<button
-  style="font-size:20px;padding:15px 40px"
-  onclick="pay()">
-  虚拟付款
-</button>
+<button onclick="pay()">虚拟付款</button>
 
 <p id="status"></p>
 
 <script>
-const WRITE_KEY = "1ZREBUT1AFCZMB2R"; // 你的 ThingSpeak 写入密钥
+const WRITE_KEY = "你的 ThingSpeak 写入 API Key";
 
-const params = new URLSearchParams(location.search);
+const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
 
 document.getElementById("title").innerText =
-  `商品 ${product} 支付确认`;
-
-let paid = false;
+  "商品 " + product + " 付款确认";
 
 function pay() {
-  if (paid) return;
-
-  paid = true;
-  document.getElementById("status").innerText = "支付中...";
-
   fetch(`https://api.thingspeak.com/update?api_key=${WRITE_KEY}&field${product}=1`)
     .then(() => {
       document.getElementById("status").innerText =
-        "支付成功，正在出货";
+        "付款成功，正在出货…";
     });
 }
 </script>
 
 </body>
 </html>
-
