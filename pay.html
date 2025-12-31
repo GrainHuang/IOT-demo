@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <title>扫码付款</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 40px;
+    }
+    img {
+      margin-top: 20px;
+    }
+  </style>
 </head>
-<body style="text-align:center;margin-top:40px;">
+<body>
 
-<h2>请使用微信扫码</h2>
+<h2>请使用微信扫码付款</h2>
 
-<img src="qrcode.png" width="250">
+<p>扫码后进入付款确认页面</p>
 
-<p>扫码后完成付款</p>
+<img id="qrcode" width="260">
 
 <script>
 const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
 
-// 模拟：扫码后跳转手机页面
-setTimeout(() => {
-  window.location.href =
-    `mobile.html?product=${product}`;
-}, 3000);
+// 手机端最终跳转地址（公网）
+const mobileUrl =
+  `https://grainhuang.github.io/IOT-demo/mobile.html?product=${product}`;
+
+// 在线生成二维码（无需本地图片）
+document.getElementById("qrcode").src =
+  "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+  encodeURIComponent(mobileUrl);
 </script>
 
 </body>
