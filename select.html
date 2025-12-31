@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>无人售货机</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    button {
+      font-size: 18px;
+      padding: 15px 30px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>无人售货机选货</h2>
+
+<button onclick="send(1)">商品 1</button>
+<button onclick="send(2)">商品 2</button>
+<button onclick="send(3)">商品 3</button>
+<button onclick="send(4)">商品 4</button>
+
+<script>
+function send(n) {
+  // 跳转到付款页面
+  window.location.href = `pay.html?product=${n}`;
+}
+</script>
+
+</body>
+</html>

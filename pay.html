@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>扫码付款</title>
+</head>
+<body style="text-align:center;margin-top:40px">
+
+<h2>请用手机扫码付款</h2>
+
+<div id="qrcode"></div>
+
+<p>扫码后在手机完成支付</p>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+<script>
+const params = new URLSearchParams(location.search);
+const product = params.get("product");
+
+// 手机端页面地址
+const mobileURL = `mobile.html?product=${product}`;
+
+new QRCode(document.getElementById("qrcode"), {
+  text: mobileURL,
+  width: 220,
+  height: 220
+});
+</script>
+
+</body>
+</html>
+
