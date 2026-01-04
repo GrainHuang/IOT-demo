@@ -7,36 +7,60 @@
     body {
       font-family: Arial;
       text-align: center;
-      margin-top: 60px;
+      margin-top: 80px;
     }
     button {
-      font-size: 20px;
-      padding: 15px 40px;
+      font-size: 22px;
+      padding: 18px 45px;
+      margin-top: 20px;
+    }
+    #status {
+      margin-top: 25px;
+      font-size: 18px;
+      color: green;
     }
   </style>
 </head>
 <body>
 
-<h2 id="title">正在加载商品…</h2>
+<h2 id="title">虚拟付款</h2>
 
-<button onclick="pay()">虚拟付款</button>
+<button onclick="send()">虚拟付款</button>
 
-<p id="status"></p>
+<p id="status">空闲</p>
 
 <script>
-const WRITE_KEY = "你的 ThingSpeak 写入 API Key";
+const WRITE_KEY = "1ZREBUT1AFCZMB2R";
 
 const params = new URLSearchParams(window.location.search);
 const product = params.get("product");
 
-document.getElementById("title").innerText =
-  "商品 " + product + " 付款确认";
+let busy = false;
 
-function pay() {
+// 参数校验（和 PC 一样，简单粗暴）
+if (!product) {
+  document.getElementById("title").innerText = "商品参数错误";
+}
+
+function send() {
+  if (busy) {
+    alert("正在出货，请稍候");
+    return;
+  }
+
+  busy = true;
+  document.getElementById("status").innerText = "出货中...";
+
   fetch(`https://api.thingspeak.com/update?api_key=${WRITE_KEY}&field${product}=1`)
     .then(() => {
       document.getElementById("status").innerText =
-        "付款成功，正在出货…";
+        `商品 ${product} 请求已发送`;
+
+      // 和 PC 端一模一样，给 ESP 时间
+      setTimeout(() => {
+        busy = false;
+        document.getElementById("status").innerText = "空闲";
+      }, 3000);
     });
 }
 </script>
